@@ -6,11 +6,11 @@
           <span class="clock-icon">⏰</span>
         </div>
         
-        <h2>Hết giờ mất rồi!</h2>
+        <h2>Hoàn thành!</h2>
         <p>Thời gian làm bài tập của bạn đã kết thúc. Đừng lo lắng, hãy kiểm tra lại những gì bạn đã làm được nhé.</p>
         
         <div class="stats-summary" v-if="score !== null">
-          Bạn đã hoàn thành: <strong style="font-weight: 700; color: green;">{{ score }}</strong> vị trí
+          Bạn đã hoàn thành: <strong style="font-weight: 700; color: red;">{{ score }}</strong> vị trí
         </div>
 
         <div class="actions">

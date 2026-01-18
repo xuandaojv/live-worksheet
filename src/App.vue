@@ -37,16 +37,17 @@
 
           <div class="options-container">
               <div 
-                v-for="option in availableOptions" 
-                :key="option.id"
-                class="draggable-chip"
-                draggable="true"
-                @dragstart="startDrag($event, option)"
-                @dragend="endDrag"
-                @touchstart.prevent="startTouch(option)"
-              >
-                <MathText :text="option.label" />
-              </div>
+              v-for="option in availableOptions" 
+              :key="option.id"
+              class="draggable-chip"
+              draggable="true"
+              @dragstart="startDrag($event, option)"
+              @touchstart="handleTouchStart($event, option)"
+              @touchmove="handleTouchMove($event)"
+              @touchend="handleTouchEnd($event, option)"
+            >
+              <MathText :text="option.label" />
+            </div>
           </div>
         </section>
 
@@ -56,25 +57,25 @@
           <div class="proof-content">
             <div class="line">
               Ta có: <MathText text="\frac{BC}{B'C'} = \frac{AC}{A'C'} = k" /> nên 
-              <drop-zone @dropped="handleDrop('1a', $event)" :content="getBlankContent('1a')" /> 
+              <drop-zone data-blank-id="1a" @dropped="handleDrop('1a', $event)" :content="getBlankContent('1a')" /> 
               và 
-              <drop-zone @dropped="handleDrop('1b', $event)" :content="getBlankContent('1b')" /> 
+              <drop-zone data-blank-id="1b" @dropped="handleDrop('1b', $event)" :content="getBlankContent('1b')" /> 
               <span class="step-num">(1)</span>
             </div>
 
             <div class="line">
               Áp dụng định lý Pythagore trong <MathText text="\triangle ABC" /> ta có: 
-              <drop-zone @dropped="handleDrop('2', $event)" :content="getBlankContent('2')" /> <span class="step-num">(2)</span>
+              <drop-zone data-blank-id="2" @dropped="handleDrop('2', $event)" :content="getBlankContent('2')" /> <span class="step-num">(2)</span>
             </div>
 
             <div class="line">
               Áp dụng định lý Pythagore trong <MathText text="\triangle A'B'C'" /> ta có: 
-              <drop-zone @dropped="handleDrop('3', $event)" :content="getBlankContent('3')" /> <span class="step-num">(3)</span>
+              <drop-zone data-blank-id="3" @dropped="handleDrop('3', $event)" :content="getBlankContent('3')" /> <span class="step-num">(3)</span>
             </div>
 
             <div class="line">
               Thay thế (1) vào (2) ta được: 
-              <drop-zone @dropped="handleDrop('4', $event)" :content="getBlankContent('4')" /> <span class="step-num">(4)</span>
+              <drop-zone data-blank-id="4" @dropped="handleDrop('4', $event)" :content="getBlankContent('4')" /> <span class="step-num">(4)</span>
             </div>
 
             <div class="line hay-line">
@@ -82,12 +83,12 @@
             </div>
 
             <div class="line">
-              Suy ra <drop-zone @dropped="handleDrop('5', $event)" :content="getBlankContent('5')" /> <span class="step-num">(5)</span>
-              nên <drop-zone @dropped="handleDrop('6', $event)" :content="getBlankContent('6')" /> <span class="step-num">(6)</span>
+              Suy ra <drop-zone data-blank-id="5" @dropped="handleDrop('5', $event)" :content="getBlankContent('5')" /> <span class="step-num">(5)</span>
+              nên <drop-zone data-blank-id="6" @dropped="handleDrop('6', $event)" :content="getBlankContent('6')" /> <span class="step-num">(6)</span>
             </div>
 
             <div class="line">
-              Do đó: <drop-zone @dropped="handleDrop('7', $event)" :content="getBlankContent('7')" /> <span class="step-num">(7)</span>
+              Do đó: <drop-zone data-blank-id="7" @dropped="handleDrop('7', $event)" :content="getBlankContent('7')" /> <span class="step-num">(7)</span>
             </div>
 
             <div class="line extra-padding">
@@ -95,7 +96,7 @@
             </div>
 
             <div class="line final-line">
-              <drop-zone @dropped="handleDrop('8', $event)" :content="getBlankContent('8')" /> <span class="step-num">(8)</span>
+              <drop-zone data-blank-id="8" @dropped="handleDrop('8', $event)" :content="getBlankContent('8')" /> <span class="step-num">(8)</span>
             </div>
           </div>
 
@@ -107,6 +108,18 @@
       </main>
     </div>
     <times-up @review="() => {isSubmit = false}" :show="isSubmit" :score="submitResult"></times-up>
+    <div class="app-background">
+      <div 
+        v-if="activeTouchOption && touchPosition.show"
+        class="touch-preview"
+        :style="{ 
+          left: touchPosition.x + 'px', 
+          top: touchPosition.y + 'px' 
+        }"
+      >
+        <MathText :text="activeTouchOption.label" />
+      </div>
+    </div>
   </div>
 </template>
 <script setup>
@@ -129,6 +142,56 @@ const MathText = defineComponent({
     };
   }
 });
+
+const activeTouchOption = ref(null);
+const touchPosition = ref({ x: 0, y: 0, show: false });
+
+const handleTouchStart = (event, option) => {
+  activeTouchOption.value = option;
+  touchPosition.value.show = false; // Chưa hiện ngay, chờ di chuyển
+};
+
+const handleTouchMove = (event) => {
+  if (!activeTouchOption.value) return;
+  
+  const touch = event.touches[0];
+  
+  // Cập nhật vị trí để Preview bay theo ngón tay
+  touchPosition.value = {
+    x: touch.clientX,
+    y: touch.clientY,
+    show: true
+  };
+
+  // Ngăn chặn cuộn trang khi đang kéo để trải nghiệm mượt hơn
+  if (event.cancelable) event.preventDefault();
+};
+
+const handleTouchEnd = (event) => {
+  if (!activeTouchOption.value) return;
+
+  const touch = event.changedTouches[0];
+  const dropZones = document.querySelectorAll('.drop-zone');
+  
+  dropZones.forEach((zone) => {
+    const rect = zone.getBoundingClientRect();
+    if (
+      touch.clientX >= rect.left &&
+      touch.clientX <= rect.right &&
+      touch.clientY >= rect.top &&
+      touch.clientY <= rect.bottom
+    ) {
+      const blankId = zone.getAttribute('data-blank-id');
+      if (blankId) {
+        handleDrop(blankId, activeTouchOption.value.id);
+      }
+    }
+  });
+
+  // Reset trạng thái
+  activeTouchOption.value = null;
+  touchPosition.value.show = false;
+};
 
 const availableOptions = ref([
   { id: 'a2', label: "AC = k \\cdot A'C'", correctPos: ['1b','1a'] },
@@ -220,7 +283,7 @@ const startTouch = (option) => {
     top: 20px;
     right: 20px;
     font-size: 24px;
-    color: green;
+    color: red;
     font-weight: 700;
   }
 /* 1. Global Background (Soft Blue/Grey with Math Grid) */
@@ -406,7 +469,7 @@ const startTouch = (option) => {
 
 .btn-primary:hover { opacity: 0.9; }
 /* Responsive: adapt layout for narrower screens and mobile */
-@media (max-width: 1080px) {
+/* @media (max-width: 1080px) {
   .math-activity-container {
     padding: 22px;
     max-width: 100%;
@@ -500,6 +563,54 @@ const startTouch = (option) => {
     top: 10px;
     right: 10px;
   }
+} */
+
+.draggable-chip {
+  /* Ngăn chặn menu chọn văn bản khi nhấn giữ */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none; /* Quan trọng: Ngăn trình duyệt cuộn trang khi kéo */
+  
+  cursor: grab;
+  /* Thêm độ trễ nhẹ hoặc phản hồi rung nếu muốn (haptic feedback) */
+}
+
+.draggable-chip:active {
+  cursor: grabbing;
+  transform: scale(1.1);
+  opacity: 0.8;
+  background: #f0faff;
+}
+
+/* Drop zone cần có kích thước đủ lớn để dễ chạm bằng ngón tay */
+.drop-zone {
+  min-height: 44px; /* Kích thước tối thiểu cho touch target theo chuẩn mobile */
+}
+.touch-preview {
+  position: fixed;
+  pointer-events: none; /* Quan trọng: để ngón tay có thể "xuyên qua" nó dò DropZone */
+  z-index: 10000;
+  background: white;
+  border: 2px solid #00b0f0;
+  color: #0070c0;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  
+  /* Căn giữa ngón tay */
+  transform: translate(-50%, -100%) scale(1.1);
+  
+  /* Hiệu ứng đổ bóng để tạo cảm giác đang được nhấc lên */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  opacity: 0.9;
+}
+
+/* Thêm hiệu ứng rung cho chip gốc khi được chọn */
+.draggable-chip:active {
+  opacity: 0.4;
+  transform: scale(0.95);
 }
 
 </style>
