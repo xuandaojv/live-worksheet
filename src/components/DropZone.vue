@@ -4,6 +4,7 @@
     :class="{ 'has-content': content !== '....................................' }"
     @dragover.prevent
     @drop="onDrop"
+    @touchend.prevent="onTouchEnd"
   >
     <template v-if="content.includes('...')">
       {{ content }}
@@ -15,9 +16,12 @@
 </template>
 
 <script setup>
+import { inject } from 'vue';
 import katex from 'katex';
 const props = defineProps(['content']);
 const emit = defineEmits(['dropped']);
+
+const currentDrag = inject('currentDrag', null);
 
 const renderMath = (text) => {
   return katex.renderToString(text, { throwOnError: false });
@@ -26,5 +30,11 @@ const renderMath = (text) => {
 const onDrop = (e) => {
   const id = e.dataTransfer.getData('optionId');
   emit('dropped', id);
+};
+
+const onTouchEnd = () => {
+  if (currentDrag && currentDrag.value) {
+    emit('dropped', currentDrag.value);
+  }
 };
 </script>

@@ -36,15 +36,17 @@
           </div>
 
           <div class="options-container">
-            <div 
-              v-for="option in availableOptions" 
-              :key="option.id"
-              class="draggable-chip"
-              draggable="true"
-              @dragstart="startDrag($event, option)"
-            >
-              <MathText :text="option.label" />
-            </div>
+              <div 
+                v-for="option in availableOptions" 
+                :key="option.id"
+                class="draggable-chip"
+                draggable="true"
+                @dragstart="startDrag($event, option)"
+                @dragend="endDrag"
+                @touchstart.prevent="startTouch(option)"
+              >
+                <MathText :text="option.label" />
+              </div>
           </div>
         </section>
 
@@ -108,7 +110,7 @@
   </div>
 </template>
 <script setup>
-import { ref, defineComponent, h } from 'vue';
+import { ref, defineComponent, h, provide } from 'vue';
 import DropZone from './components/DropZone.vue';
 import katex from 'katex';
 import Timer from './components/Timer.vue';
@@ -139,6 +141,10 @@ const availableOptions = ref([
   { id: 'a3', label: "AB^2 = BC^2 - AC^2", correctPos: ['2'] },
   { id: 'a6', label: "AB^2 = k^2 \\cdot A'B'^2", correctPos: ['5'] },
 ]);
+
+const currentDrag = ref(null);
+
+provide('currentDrag', currentDrag);
 
 const reset = () => {
   for (const key in filledBlanks.value) {
@@ -191,10 +197,20 @@ const handleDrop = (blankId, optionId) => {
   if (option) {
     filledBlanks.value[blankId] = { ...option };
   }
+  currentDrag.value = null;
 };
 
 const startDrag = (event, option) => {
   event.dataTransfer.setData('optionId', option.id);
+  currentDrag.value = option.id;
+};
+
+const endDrag = () => {
+  currentDrag.value = null;
+};
+
+const startTouch = (option) => {
+  currentDrag.value = option.id;
 };
 </script>
 
@@ -389,4 +405,101 @@ const startDrag = (event, option) => {
 }
 
 .btn-primary:hover { opacity: 0.9; }
+/* Responsive: adapt layout for narrower screens and mobile */
+@media (max-width: 1080px) {
+  .math-activity-container {
+    padding: 22px;
+    max-width: 100%;
+  }
+
+  .content-grid {
+    grid-template-columns: 300px 1fr;
+    gap: 20px;
+  }
+
+  .proof-paper {
+    padding: 28px;
+  }
+}
+
+@media (max-width: 720px) {
+  .app-background {
+    padding: 16px 12px;
+    align-items: flex-start;
+  }
+
+  .math-activity-container {
+    padding: 14px;
+    border-radius: 12px;
+    box-shadow: none;
+  }
+
+  .main-header {
+    margin-bottom: 20px;
+  }
+
+  .title-badge {
+    padding: 6px 14px;
+    font-size: 0.95rem;
+  }
+
+  .instruction-text {
+    font-size: 0.95rem;
+    margin-top: 10px;
+  }
+
+  .content-grid {
+    display: block;
+  }
+
+  .sidebar {
+    margin-bottom: 18px;
+  }
+
+  .geometry-img {
+    width: 100%;
+    max-height: 220px;
+    object-fit: contain;
+  }
+
+  .options-container {
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .draggable-chip {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  .proof-paper {
+    padding: 18px;
+    border-left-width: 4px;
+  }
+
+  .proof-title { margin-bottom: 18px; }
+
+  .line { margin-bottom: 14px; line-height: 1.6; }
+
+  .step-num { margin-left: 8px; order: 2; }
+
+  .footer-actions {
+    margin-top: 20px;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    padding: 10px 16px;
+  }
+
+  .submit-result{
+    font-size: 18px;
+    top: 10px;
+    right: 10px;
+  }
+}
+
 </style>
