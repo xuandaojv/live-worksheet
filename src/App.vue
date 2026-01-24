@@ -75,11 +75,11 @@
 
             <div class="line">
               Thay thế (1) vào (2) ta được: 
-              <drop-zone data-blank-id="4" @dropped="handleDrop('4', $event)" :content="getBlankContent('4')" /> <span class="step-num">(4)</span>
+              <drop-zone data-blank-id="4" @dropped="handleDrop('4', $event)" :content="getBlankContent('4')" /> <span class="step-num">(4a)</span>
             </div>
 
             <div class="line hay-line">
-              Hay <MathText text="AB^2 = k^2(B'C'^2 - A'C'^2)" />.
+              Hay <drop-zone data-blank-id="4b" @dropped="handleDrop('4b', $event)" :content="getBlankContent('4b')" /> <span class="step-num">(4b)</span>
             </div>
 
             <div class="line">
@@ -102,7 +102,7 @@
 
           <div class="footer-actions">
              <button @click="reset" class="btn-secondary">Làm lại</button>
-             <button @click="checkAnswers" class="btn-primary">Kiểm tra kết quả</button>
+             <button @click="checkAnswers" class="btn-primary">Nộp bài</button>
           </div>
         </section>
       </main>
@@ -211,6 +211,7 @@ const availableOptions = ref([
   { id: 'a8', label: "\\frac{AB}{A'B'} = \\frac{AC}{A'C'} = \\frac{BC}{B'C'} = k", correctPos: ['7'] },
   { id: 'a3', label: "AB^2 = BC^2 - AC^2", correctPos: ['2'] },
   { id: 'a6', label: "AB^2 = k^2 \\cdot A'B'^2", correctPos: ['5'] },
+  { id: 'a10', label: "AB^2 = k^2(B'C'^2 - A'C'^2)", correctPos: ['4b'] },
 ]);
 
 const currentDrag = ref(null);
@@ -225,7 +226,7 @@ const reset = () => {
 
 const checkAnswers = async () => {
   let score = 0;
-  const total = 9; // Total number of blanks (including 1.5)
+  const total = 10; // Total number of blanks (including 1.5)
   Object.keys(filledBlanks.value).forEach(blankId => {
     const answer = filledBlanks.value[blankId];
     // Check if the current blankId is in the allowed correct positions for this answer
@@ -270,7 +271,7 @@ const checkAnswers = async () => {
 const isSubmit = ref(false);
 const isStarted = ref(false);
 
-const submitResult = ref("0/9");
+const submitResult = ref("0/10");
 // Initialize with keys but empty values
 const filledBlanks = ref({
   '1a': null,
@@ -281,7 +282,8 @@ const filledBlanks = ref({
   '5': null,
   '6': null,
   '7': null,
-  '8': null
+  '8': null,
+  '4b': null
 });
 
 // The function you asked for

@@ -10,7 +10,7 @@
       {{ content }}
     </template>
     <template v-else>
-      <div v-html="renderMath(content)"></div>
+      <div class="c-dropped" :class="'status-' + status" v-html="renderMath(content)"></div>
     </template>
   </div>
 </template>
@@ -18,7 +18,7 @@
 <script setup>
 import { inject } from 'vue';
 import katex from 'katex';
-const props = defineProps(['content']);
+const props = defineProps(['content', 'status']);
 const emit = defineEmits(['dropped']);
 
 const currentDrag = inject('currentDrag', null);
@@ -38,3 +38,38 @@ const onTouchEnd = () => {
   }
 };
 </script>
+<style scoped>
+.drop-zone {
+  line-height: 44px;
+}
+::v-deep(.c-dropped .katex) {
+  border-bottom: dashed 1px #019940;
+}
+
+::v-deep(.status-correct .katex) {
+  border: solid 1px #019940;
+  padding: 4px;
+  border-radius: 8px;
+  
+}
+
+.status-correct::after {
+  content: '✓';
+  color: #019940;
+  font-weight: bold;
+  margin-left: 6px;
+}
+
+::v-deep(.status-incorrect .katex) {
+  border: solid 1px red;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.status-incorrect::after {
+  content: '✗';
+  color: red;
+  font-weight: bold;
+  margin-left: 6px;
+}
+</style>
