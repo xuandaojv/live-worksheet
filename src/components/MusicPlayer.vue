@@ -40,7 +40,20 @@
     </audio>
     <div v-if="!isStarted" class="start-overlay">
       <div class="start-content">
-        <button style="padding: 20px 40px; background-color: #0370bc; color: #fff; font-weight: 700; border: solid 2px #fff; cursor: pointer; outline: none; border-radius: 8px;" class="start-button" @click="handleStart">Bắt đầu làm bài</button>
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:center;">
+          <input
+            v-model="playerName"
+            @keyup.enter="handleStart"
+            placeholder="Họ và tên"
+            style="background-color: #fff; padding:10px 14px;border-radius:8px;border:1px solid #ddd;width:260px;font-size:16px;"
+          />
+          <button
+            :disabled="!playerName || !playerName.trim()"
+            style="padding: 14px 32px; background-color: #0370bc; color: #fff; font-weight: 700; border: solid 2px #fff; cursor: pointer; outline: none; border-radius: 8px;"
+            class="start-button"
+            @click="handleStart"
+          >Bắt đầu làm bài</button>
+        </div>
       </div>
     </div>
 </div>
@@ -54,6 +67,7 @@ const isPlaying = ref(false);
 const isStarted = ref(false);
 const volume = ref(0.5);
 const audioRef = ref(null);
+const playerName = ref('')
 
 const togglePlay = () => {
   if (isPlaying.value) {
@@ -64,9 +78,11 @@ const togglePlay = () => {
 };
 
 const handleStart = () => {
+  const name = playerName.value && playerName.value.trim()
+  if (!name) return
   isStarted.value = true;
   audioRef.value.play();
-    emit('start');
+  emit('start', name);
 };
 
 const updateVolume = () => {
@@ -83,7 +99,7 @@ onMounted(() => {
 <style scoped>
 @keyframes pulse {
   0% { transform: scale(1); }
-  50% { transform: scale(1.15); }
+  50% { transform: scale(1.1); }
   100% { transform: scale(1); }
 }
 .start-content{
@@ -91,6 +107,8 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.start-button{
     animation: pulse 1s infinite;
 }
 .start-overlay{

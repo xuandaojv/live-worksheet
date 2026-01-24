@@ -13,7 +13,10 @@
   },
   "dependencies": {
     "katex": "^0.16.27",
-    "vue": "^3.5.26"
+    "vue": "^3.5.26",
+    "vue-router": "^4.2.12",
+    "vuetify": "^3.3.0",
+    "sass": "^1.64.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.3",

@@ -5,7 +5,7 @@
       <header class="main-header">
         <div class="timer" style="display: flex; justify-content: space-between;">
           <Timer v-if="isStarted" :time="120" @time-up="handleTimeUp" />
-          <music-player @start="isStarted = true"></music-player>
+          <music-player @start="handlePlayerStart"></music-player>
         </div>
         <div class="title-badge">TẬP SUY LUẬN</div>
         <p class="instruction-text">
@@ -129,6 +129,8 @@ import katex from 'katex';
 import Timer from './components/Timer.vue';
 import TimesUp from './components/TimesUp.vue';
 import MusicPlayer from './components/MusicPlayer.vue';
+import createSubmission from './models/submission'
+import submissionService from './services/submissionService'
 
 const MathText = defineComponent({
   props: ['text'],
@@ -145,6 +147,12 @@ const MathText = defineComponent({
 
 const activeTouchOption = ref(null);
 const touchPosition = ref({ x: 0, y: 0, show: false });
+const playerName = ref('')
+
+const handlePlayerStart = (name) => {
+  if (name && typeof name === 'string') playerName.value = name.trim()
+  isStarted.value = true
+}
 
 const handleTouchStart = (event, option) => {
   activeTouchOption.value = option;
@@ -215,7 +223,7 @@ const reset = () => {
   }
 };
 
-const checkAnswers = () => {
+const checkAnswers = async () => {
   let score = 0;
   const total = 9; // Total number of blanks (including 1.5)
   Object.keys(filledBlanks.value).forEach(blankId => {
@@ -227,6 +235,36 @@ const checkAnswers = () => {
   });
   isSubmit.value = true;
   submitResult.value = `${score}/${total}`;
+  // Persist structured submission using the remote API; fallback to localStorage on failure
+  // const percent = Math.round((score / total) * 100)
+  const details = JSON.stringify(filledBlanks.value)
+  const submission = createSubmission({ name: `name`, score: score, details })
+
+  // Use entered player name when available, otherwise try to derive a nice name from remote count
+  if (playerName.value) {
+    submission.name = playerName.value
+  } else {
+    try {
+      const existing = await submissionService.list()
+      const count = Array.isArray(existing) ? existing.length : 0
+      submission.name = `name ${count + 1}`
+    } catch (e) {
+      submission.name = `name ${Date.now()}`
+    }
+  }
+
+  try {
+    await submissionService.create(submission)
+  } catch (e) {
+    console.warn('Failed to create submission via API, falling back to localStorage', e)
+    try {
+      const subs = JSON.parse(localStorage.getItem('submissions') || '[]')
+      subs.push(submission)
+      localStorage.setItem('submissions', JSON.stringify(subs))
+    } catch (err) {
+      console.warn('Failed to save submission to localStorage as fallback', err)
+    }
+  }
 };
 
 const isSubmit = ref(false);
@@ -295,7 +333,7 @@ const startTouch = (option) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px 20px;
+  /* padding: 40px 20px; */
 }
 
 /* 2. Main Container */
