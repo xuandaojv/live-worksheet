@@ -12,7 +12,7 @@
                             <strong>GT:</strong>
                             <!-- Updated givens -->
                             <div style="margin-left:2px;">
-                            <MathText text="\text{Hình ảnh}" />
+                                <MathText :text="'\\angle CFG = \\angle CDE = 90^\\circ'" />
                             </div>
                         </div>
                         <div class="divider"></div>
