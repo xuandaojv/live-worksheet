@@ -42,11 +42,11 @@ const onTouchEnd = () => {
 .drop-zone {
   line-height: 44px;
 }
-::v-deep(.c-dropped .katex) {
+.c-dropped {
   border-bottom: dashed 1px #019940;
 }
 
-::v-deep(.status-correct .katex) {
+.status-correct {
   border: solid 1px #019940;
   padding: 4px;
   border-radius: 8px;
@@ -60,7 +60,7 @@ const onTouchEnd = () => {
   margin-left: 6px;
 }
 
-::v-deep(.status-incorrect .katex) {
+.status-incorrect {
   border: solid 1px red;
   padding: 4px;
   border-radius: 8px;

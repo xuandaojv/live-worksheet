@@ -4,7 +4,7 @@
       
       <header class="main-header">
         <div class="timer" style="display: flex; justify-content: space-between;">
-          <Timer v-if="isStarted" :time="120" @time-up="handleTimeUp" />
+          <Timer v-if="isStarted" :time="180" @time-up="handleTimeUp" />
           <music-player @start="handlePlayerStart"></music-player>
         </div>
         <div class="title-badge">TẬP SUY LUẬN</div>
@@ -19,18 +19,24 @@
         <section class="sidebar">
           <div class="geometry-card">
             <div class="triangle-svg-container">
-                <img src="@/assets/image/2.png" alt="Triangle Diagram" class="geometry-img" />
+                <img src="@/assets/image/12.png" alt="Triangle Diagram" class="geometry-img" />
             </div>
             
             <div class="problem-box">
               <div class="row">
-                <strong>GT:</strong> 
-                <MathText text="\triangle ABC, \triangle A'B'C'; \frac{BC}{B'C'} = \frac{AC}{A'C'}" />
+                <strong>GT:</strong>
+                <!-- Updated givens -->
+                <div style="margin-left:2px;">
+                  <MathText text="\text{Hình ảnh}" />
+                </div>
               </div>
               <div class="divider"></div>
               <div class="row">
-                <strong>KL:</strong> 
-                <MathText text="\triangle ABC \sim \triangle A'B'C'" />
+                <strong>KL:</strong>
+                <!-- Updated conclusion -->
+                <div style="margin-left:2px;">
+                  <MathText text="\text{Tìm khoảng cách từ D tới Tháp Rùa (m)}" />
+                </div>
               </div>
             </div>
           </div>
@@ -56,47 +62,44 @@
           
           <div class="proof-content">
             <div class="line">
-              Ta có: <MathText text="\frac{BC}{B'C'} = \frac{AC}{A'C'} = k" /> nên 
-              <drop-zone data-blank-id="1a" @dropped="handleDrop('1a', $event)" :content="getBlankContent('1a')" /> 
-              và 
-              <drop-zone data-blank-id="1b" @dropped="handleDrop('1b', $event)" :content="getBlankContent('1b')" /> 
+              Xét hai tam giác vuông: 
+              <drop-zone data-blank-id="1a" @dropped="handleDrop('1a', $event)" :content="getBlankContent('1a')" />
+              và
+              <drop-zone data-blank-id="1b" @dropped="handleDrop('1b', $event)" :content="getBlankContent('1b')" />
               <span class="step-num">(1)</span>
             </div>
 
             <div class="line">
-              Áp dụng định lý Pythagore trong <MathText text="\triangle ABC" /> ta có: 
-              <drop-zone data-blank-id="2" @dropped="handleDrop('2', $event)" :content="getBlankContent('2')" /> <span class="step-num">(2)</span>
+              Có: <drop-zone data-blank-id="2" @dropped="handleDrop('2', $event)" :content="getBlankContent('2')" />
+              <span class="step-num">(2)</span>
             </div>
 
             <div class="line">
-              Áp dụng định lý Pythagore trong <MathText text="\triangle A'B'C'" /> ta có: 
-              <drop-zone data-blank-id="3" @dropped="handleDrop('3', $event)" :content="getBlankContent('3')" /> <span class="step-num">(3)</span>
+              và <drop-zone data-blank-id="3" @dropped="handleDrop('3', $event)" :content="getBlankContent('3')" /> <span class="step-num">(3)</span>
             </div>
 
             <div class="line">
-              Thay thế (1) vào (2) ta được: 
-              <drop-zone data-blank-id="4" @dropped="handleDrop('4', $event)" :content="getBlankContent('4')" /> <span class="step-num">(4a)</span>
-            </div>
-
-            <div class="line hay-line">
-              Hay <drop-zone data-blank-id="4b" @dropped="handleDrop('4b', $event)" :content="getBlankContent('4b')" /> <span class="step-num">(4b)</span>
+              Suy ra: <drop-zone data-blank-id="4" @dropped="handleDrop('4', $event)" :content="getBlankContent('4')" /> <span class="step-num">(4)</span>
             </div>
 
             <div class="line">
-              Suy ra <drop-zone data-blank-id="5" @dropped="handleDrop('5', $event)" :content="getBlankContent('5')" /> <span class="step-num">(5)</span>
-              nên <drop-zone data-blank-id="6" @dropped="handleDrop('6', $event)" :content="getBlankContent('6')" /> <span class="step-num">(6)</span>
+              Do đó: <drop-zone data-blank-id="5" @dropped="handleDrop('5', $event)" :content="getBlankContent('5')" /> <span class="step-num">(5)</span>
             </div>
 
             <div class="line">
-              Do đó: <drop-zone data-blank-id="7" @dropped="handleDrop('7', $event)" :content="getBlankContent('7')" /> <span class="step-num">(7)</span>
+              Đặt CF = x (x&gt;0) (m), suy ra: <drop-zone data-blank-id="6" @dropped="handleDrop('6', $event)" :content="getBlankContent('6')" /> <span class="step-num">(6)</span>
             </div>
 
-            <div class="line extra-padding">
-              nên theo trường hợp đồng dạng thứ nhất của tam giác thì:
+            <div class="line">
+              <drop-zone data-blank-id="7" @dropped="handleDrop('7', $event)" :content="getBlankContent('7')" /> <span class="step-num">(7)</span>
+            </div>
+
+            <div class="line">
+              <drop-zone data-blank-id="8" @dropped="handleDrop('8', $event)" :content="getBlankContent('8')" /> <span class="step-num">(8)</span>
             </div>
 
             <div class="line final-line">
-              <drop-zone data-blank-id="8" @dropped="handleDrop('8', $event)" :content="getBlankContent('8')" /> <span class="step-num">(8)</span>
+              Vậy khoảng cách từ điểm D tới Tháp Rùa: <drop-zone data-blank-id="9" @dropped="handleDrop('9', $event)" :content="getBlankContent('9')" /> <span class="step-num">(9)</span>
             </div>
           </div>
 
@@ -201,18 +204,20 @@ const handleTouchEnd = (event) => {
   touchPosition.value.show = false;
 };
 
-const availableOptions = ref([
-  { id: 'a2', label: "AC = k \\cdot A'C'", correctPos: ['1b','1a'] },
-  { id: 'a9', label: "\\triangle ABC \\sim \\triangle A'B'C'", correctPos: ['8'] },
-  { id: 'a1', label: "BC = k \\cdot B'C'", correctPos: ['1a', '1b'] },
-  { id: 'a7', label: "AB = k \\cdot A'B'", correctPos: ['6'] },
-  { id: 'a4', label: "A'B'^2 = B'C'^2 - A'C'^2", correctPos: ['3'] },
-  { id: 'a5', label: "AB^2 = (k \\cdot B'C')^2 - (k \\cdot A'C')^2", correctPos: ['4'] },
-  { id: 'a8', label: "\\frac{AB}{A'B'} = \\frac{AC}{A'C'} = \\frac{BC}{B'C'} = k", correctPos: ['7'] },
-  { id: 'a3', label: "AB^2 = BC^2 - AC^2", correctPos: ['2'] },
-  { id: 'a6', label: "AB^2 = k^2 \\cdot A'B'^2", correctPos: ['5'] },
-  { id: 'a10', label: "AB^2 = k^2(B'C'^2 - A'C'^2)", correctPos: ['4b'] },
-]);
+const initialOptions = [
+  { id: 'a1', label: "\\triangle CFG", correctPos: ['1a'] },
+  { id: 'a2', label: "\\triangle CDE", correctPos: ['1b'] },
+  { id: 'a3', label: "\\angle CFG = \\angle CDE = 90^\\circ", correctPos: ['2'] },
+  { id: 'a4', label: "\\angle DEC \\text{ là góc chung}", correctPos: ['3'] },
+  { id: 'a5', label: "\\triangle CFG \\sim \\triangle CDE \\;(g- g_)", correctPos: ['4'] },
+  { id: 'a6', label: "\\dfrac{CF}{CD}=\\dfrac{FG}{DF}", correctPos: ['5'] },
+  { id: 'a7', label: "\\dfrac{x}{x+20}=\\dfrac{40}{50}", correctPos: ['6'] },
+  { id: 'a8', label: "50x - 40x = 800", correctPos: ['7'] },
+  { id: 'a9', label: "x = 80", correctPos: ['8'] },
+  { id: 'a10', label: "80 + 20 = 100 \\;(m)", correctPos: ['9'] },
+];
+
+const availableOptions = ref(initialOptions.slice());
 
 const currentDrag = ref(null);
 
@@ -222,11 +227,13 @@ const reset = () => {
   for (const key in filledBlanks.value) {
     filledBlanks.value[key] = null;
   }
+  // restore options to initial state
+  availableOptions.value = initialOptions.slice();
 };
 
 const checkAnswers = async () => {
   let score = 0;
-  const total = 10; // Total number of blanks (including 1.5)
+  const total = 10; // Updated total after moving CF out of drop-zones
   Object.keys(filledBlanks.value).forEach(blankId => {
     const answer = filledBlanks.value[blankId];
     // Check if the current blankId is in the allowed correct positions for this answer
@@ -237,7 +244,6 @@ const checkAnswers = async () => {
   isSubmit.value = true;
   submitResult.value = `${score}/${total}`;
   // Persist structured submission using the remote API; fallback to localStorage on failure
-  // const percent = Math.round((score / total) * 100)
   const details = JSON.stringify(filledBlanks.value)
   const submission = createSubmission({ name: `name`, score: score, details })
 
@@ -271,8 +277,8 @@ const checkAnswers = async () => {
 const isSubmit = ref(false);
 const isStarted = ref(false);
 
-const submitResult = ref("0/10");
-// Initialize with keys but empty values
+const submitResult = ref("0/11");
+// Initialize with keys but empty values (11 blanks)
 const filledBlanks = ref({
   '1a': null,
   '1b': null,
@@ -280,16 +286,17 @@ const filledBlanks = ref({
   '3': null,
   '4': null,
   '5': null,
-  '6': null,
   '7': null,
   '8': null,
-  '4b': null
+  '9': null,
+  '10': null
 });
 
 // The function you asked for
 const getBlankContent = (blankId) => {
   if (filledBlanks.value[blankId]) {
-    return filledBlanks.value[blankId].label;
+    // wrap filled label with as requested
+    return `${filledBlanks.value[blankId].label}`;
   }
   // This return value matches the visual style of your image
   return '....................................';
@@ -299,6 +306,8 @@ const handleDrop = (blankId, optionId) => {
   const option = availableOptions.value.find(o => o.id === optionId);
   if (option) {
     filledBlanks.value[blankId] = { ...option };
+    // remove the option so it no longer appears in the options list
+    availableOptions.value = availableOptions.value.filter(o => o.id !== optionId);
   }
   currentDrag.value = null;
 };
@@ -376,7 +385,7 @@ const startTouch = (option) => {
 /* 4. Layout Grid */
 .content-grid {
   display: grid;
-  grid-template-columns: 350px 1fr;
+  grid-template-columns: 380px 1fr;
   gap: 30px;
 }
 
@@ -508,102 +517,6 @@ const startTouch = (option) => {
 }
 
 .btn-primary:hover { opacity: 0.9; }
-/* Responsive: adapt layout for narrower screens and mobile */
-/* @media (max-width: 1080px) {
-  .math-activity-container {
-    padding: 22px;
-    max-width: 100%;
-  }
-
-  .content-grid {
-    grid-template-columns: 300px 1fr;
-    gap: 20px;
-  }
-
-  .proof-paper {
-    padding: 28px;
-  }
-}
-
-@media (max-width: 720px) {
-  .app-background {
-    padding: 16px 12px;
-    align-items: flex-start;
-  }
-
-  .math-activity-container {
-    padding: 14px;
-    border-radius: 12px;
-    box-shadow: none;
-  }
-
-  .main-header {
-    margin-bottom: 20px;
-  }
-
-  .title-badge {
-    padding: 6px 14px;
-    font-size: 0.95rem;
-  }
-
-  .instruction-text {
-    font-size: 0.95rem;
-    margin-top: 10px;
-  }
-
-  .content-grid {
-    display: block;
-  }
-
-  .sidebar {
-    margin-bottom: 18px;
-  }
-
-  .geometry-img {
-    width: 100%;
-    max-height: 220px;
-    object-fit: contain;
-  }
-
-  .options-container {
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .draggable-chip {
-    padding: 8px 12px;
-    font-size: 0.85rem;
-  }
-
-  .proof-paper {
-    padding: 18px;
-    border-left-width: 4px;
-  }
-
-  .proof-title { margin-bottom: 18px; }
-
-  .line { margin-bottom: 14px; line-height: 1.6; }
-
-  .step-num { margin-left: 8px; order: 2; }
-
-  .footer-actions {
-    margin-top: 20px;
-    justify-content: center;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .btn-primary, .btn-secondary {
-    width: 100%;
-    padding: 10px 16px;
-  }
-
-  .submit-result{
-    font-size: 18px;
-    top: 10px;
-    right: 10px;
-  }
-} */
 
 .draggable-chip {
   /* Ngăn chặn menu chọn văn bản khi nhấn giữ */
