@@ -205,16 +205,16 @@ const handleTouchEnd = (event) => {
 };
 
 const initialOptions = [
-  { id: 'a1', label: "\\triangle CFG", correctPos: ['1a'] },
-  { id: 'a2', label: "\\triangle CDE", correctPos: ['1b'] },
-  { id: 'a3', label: "\\angle CFG = \\angle CDE = 90^\\circ", correctPos: ['2'] },
-  { id: 'a4', label: "\\angle DEC \\text{ là góc chung}", correctPos: ['3'] },
-  { id: 'a5', label: "\\triangle CFG \\sim \\triangle CDE \\;(g- g_)", correctPos: ['4'] },
+  { id: 'a3', label: "\\angle CFG = \\angle CDE = 90^\\circ", correctPos: ['2', '3'] },
   { id: 'a6', label: "\\dfrac{CF}{CD}=\\dfrac{FG}{DF}", correctPos: ['5'] },
-  { id: 'a7', label: "\\dfrac{x}{x+20}=\\dfrac{40}{50}", correctPos: ['6'] },
+  { id: 'a1', label: "\\triangle CFG", correctPos: ['1a', '1b'] },
+  { id: 'a5', label: "\\triangle CFG \\sim \\triangle CDE \\;(g- g_)", correctPos: ['4'] },
+  { id: 'a2', label: "\\triangle CDE", correctPos: ['1b', '1a'] },
+  { id: 'a4', label: "\\angle DEC \\text{ là góc chung}", correctPos: ['3', '2'] },
   { id: 'a8', label: "50x - 40x = 800", correctPos: ['7'] },
-  { id: 'a9', label: "x = 80", correctPos: ['8'] },
   { id: 'a10', label: "80 + 20 = 100 \\;(m)", correctPos: ['9'] },
+  { id: 'a9', label: "x = 80", correctPos: ['8'] },
+  { id: 'a7', label: "\\dfrac{x}{x+20}=\\dfrac{40}{50}", correctPos: ['6'] },
 ];
 
 const availableOptions = ref(initialOptions.slice());
