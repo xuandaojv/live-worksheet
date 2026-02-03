@@ -27,6 +27,8 @@
                 <strong>GT:</strong>
                 <!-- Updated givens -->
                 <div style="margin-left:2px;">
+                  <MathText text="\text{Cho hình ảnh biết: }" />
+                  <br>
                   <MathText :text="'\\angle CFG = \\angle CDE = 90^\\circ'" />
                 </div>
               </div>
@@ -58,7 +60,7 @@
         </section>
 
         <section class="proof-paper">
-          <h3 class="proof-title">Chứng minh</h3>
+          <h3 class="proof-title">Bài làm</h3>
           
           <div class="proof-content">
             <div class="line">
