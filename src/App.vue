@@ -210,10 +210,12 @@ const initialOptions = [
   { id: 'a1', label: "\\triangle CFG", correctPos: ['1a', '1b'] },
   { id: 'a5', label: "\\triangle CFG \\sim \\triangle CDE \\;(g- g_)", correctPos: ['4'] },
   { id: 'a2', label: "\\triangle CDE", correctPos: ['1b', '1a'] },
+  { id: 'a11', label: "\\triangle CDE  \\sim \\triangle CGF \\;(g- g_)", correctPos: ['11'] },
   { id: 'a4', label: "\\angle DEC \\text{ là góc chung}", correctPos: ['3', '2'] },
   { id: 'a8', label: "50x - 40x = 800", correctPos: ['7'] },
   { id: 'a10', label: "80 + 20 = 100 \\;(m)", correctPos: ['9'] },
   { id: 'a9', label: "x = 80", correctPos: ['8'] },
+  { id: 'a12', label: "x = 100", correctPos: ['12'] },
   { id: 'a7', label: "\\dfrac{x}{x+20}=\\dfrac{40}{50}", correctPos: ['6'] },
 ];
 
