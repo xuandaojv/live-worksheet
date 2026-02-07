@@ -36,7 +36,7 @@
                 </div>
             </section>
             <section class="proof-paper">
-                <h3 class="proof-title">Chứng minh</h3>
+                <h3 class="proof-title">Bài làm</h3>
                 <div class="c-point" :class="getScoreStatus()" style="font-family: 'Permanent Marker', cursive;"><span style="font-size: 48px;">{{ getScore() !== undefined ? getScore() : '0' }}</span><span class="separator">/10</span></div>
                 <div class="proof-content">
                     <div class="line">
