@@ -1,17 +1,18 @@
 <template>
     <div class="wrapper">
+        <div style="font-size: 28px; position: fixed; top: 10px; right: 20px; cursor: pointer;" @click="closePopup">🗙</div>
         <main class="content-grid">
             <section class="sidebar">
                 <div class="geometry-card">
                     <div class="triangle-svg-container">
-                        <img src="@/assets/image/12.png" alt="Triangle Diagram" class="geometry-img" />
+                        <img src="@/assets/image/13.jpg" alt="Triangle Diagram" class="geometry-img" />
                     </div>
 
                     <div class="problem-box">
                         <div class="row">
                             <strong>GT:</strong>
                             <!-- Updated givens -->
-                            <div style="margin-left:2px;">
+                            <div>
                                 <MathText :text="'\\angle CFG = \\angle CDE = 90^\\circ'" />
                             </div>
                         </div>
@@ -19,8 +20,8 @@
                         <div class="row">
                             <strong>KL:</strong>
                             <!-- Updated conclusion -->
-                            <div style="margin-left:2px;">
-                            <MathText text="\text{Tìm khoảng cách từ D tới Tháp Rùa (m)}" />
+                            <div>
+                                <MathText text="\text{Tìm khoảng cách từ điểm D trên} \\ \text{bờ hồ tới điểm C trên Tháp Rùa (m)}" />
                             </div>
                         </div>
                     </div>
@@ -162,6 +163,13 @@ const handleDrop = () => {
 }
 </script>
 <style scoped>
+.proof-content{
+    max-height: 65vh;
+    overflow-y: scroll;
+}
+.content-grid{
+    font-size: 26px;
+}
 .c-point{
     position: absolute;
     top: -25px;
@@ -192,7 +200,7 @@ const handleDrop = () => {
 }
 .content-grid {
     display: grid;
-    grid-template-columns: 350px 1fr;
+    grid-template-columns: 380px 1fr;
     gap: 30px;
 }
 
@@ -217,6 +225,16 @@ const handleDrop = () => {
     border-radius: 12px;
     font-size: 0.95rem;
     color: #2d3748;
+  position: relative;
+    ::before {
+        content: "";
+        position: absolute;
+        top: 15px;
+        left: 45px;
+        width: 1px;
+        height: calc(100% - 30px);
+        background-color: #cbd5e0;
+    }
 }
 
 .divider {
@@ -322,5 +340,9 @@ const handleDrop = () => {
     border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
+}
+.row{
+    display: flex;
+    column-gap: 15px;
 }
 </style>
