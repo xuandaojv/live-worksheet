@@ -14,6 +14,7 @@
                             <!-- Updated givens -->
                             <div>
                                 <MathText :text="'\\angle CFG = \\angle CDE = 90^\\circ'" />
+                                <MathText text="\text{FD=20m; FG=40m; DE=50m}" />
                             </div>
                         </div>
                         <div class="divider"></div>
@@ -200,7 +201,7 @@ const handleDrop = () => {
 }
 .content-grid {
     display: grid;
-    grid-template-columns: 380px 1fr;
+    grid-template-columns: 600px 1fr;
     gap: 30px;
 }
 
@@ -225,12 +226,13 @@ const handleDrop = () => {
     border-radius: 12px;
     font-size: 0.95rem;
     color: #2d3748;
-  position: relative;
+    position: relative;
+    font-size: 26px;
     ::before {
         content: "";
         position: absolute;
         top: 15px;
-        left: 45px;
+        left: 60px;
         width: 1px;
         height: calc(100% - 30px);
         background-color: #cbd5e0;
