@@ -64,7 +64,7 @@ import { ref, onMounted } from 'vue';
 
 const emit = defineEmits(['start']);
 const isPlaying = ref(false);
-const isStarted = ref(false);
+const isStarted = ref(true);
 const volume = ref(0.5);
 const audioRef = ref(null);
 const playerName = ref('')
