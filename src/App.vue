@@ -10,7 +10,7 @@
         <div class="title-badge">BÀI LÀM</div>
         <p class="instruction-text">
           <span class="icon">✏️</span> 
-          Hoàn thành phần chứng minh bằng cách kéo các đáp án vào vị trí thích hợp
+          Hoàn thành bài làm bằng cách kéo các đáp án vào vị trí thích hợp
         </p>
         <div class="submit-result" v-if="isSubmit">{{ submitResult }}</div>
       </header>
@@ -84,7 +84,7 @@
             </div>
 
             <div class="line">
-              Do đó: <drop-zone data-blank-id="5" @dropped="handleDrop('5', $event)" :content="getBlankContent('5')" />(Hai cạnh tương ứng) <span class="step-num">(5)</span>
+              Do đó: <drop-zone data-blank-id="5" @dropped="handleDrop('5', $event)" :content="getBlankContent('5')" />(cặp cạnh tương ứng tỉ lệ) <span class="step-num">(5)</span>
             </div>
 
             <div class="line">

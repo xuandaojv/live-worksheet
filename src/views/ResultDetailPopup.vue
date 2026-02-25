@@ -61,7 +61,7 @@
             </div>
 
             <div class="line">
-              Do đó: <drop-zone :status="getDropStatus('5')" data-blank-id="5" @dropped="handleDrop('5', $event)" :content="getBlankContent('5')" />(Hai cạnh tương ứng) <span class="step-num">(5)</span>
+              Do đó: <drop-zone :status="getDropStatus('5')" data-blank-id="5" @dropped="handleDrop('5', $event)" :content="getBlankContent('5')" />(cặp cạnh tương ứng tỉ lệ) <span class="step-num">(5)</span>
             </div>
 
             <div class="line">
