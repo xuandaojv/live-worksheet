@@ -5,7 +5,7 @@
         <section class="sidebar">
           <div class="geometry-card">
             <div class="triangle-svg-container">
-                <img src="@/assets/image/3.jpg" alt="Triangle Diagram" class="geometry-img" />
+                <img src="@/assets/image/4.jpg" alt="Triangle Diagram" class="geometry-img" />
             </div>
             
             <!-- <div class="problem-box">

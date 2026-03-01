@@ -105,8 +105,11 @@ const remove = async (id) => {
 const clearAll = async () => {
   if (!confirm('Xóa tất cả kết quả?')) return
   try {
-    await Promise.all(submissions.value.map(s => submissionService.del(s.id)))
-    await load()
+    var ids = submissions.value.map(s => s.id).sort((a, b) => b - a);
+    for (const id of ids) {
+      await submissionService.del(id);
+      submissions.value = submissions.value.filter(s => s.id !== id);
+    }
   } catch (e) {
     alert('Xóa tất cả thất bại')
   }

@@ -19,7 +19,7 @@
         <section class="sidebar">
           <div class="geometry-card">
             <div class="triangle-svg-container">
-                <img src="@/assets/image/3.jpg" alt="Triangle Diagram" class="geometry-img" />
+                <img src="@/assets/image/4.jpg" alt="Triangle Diagram" class="geometry-img" />
             </div>
             
             <!-- <div class="problem-box">
@@ -110,7 +110,8 @@
 
           <div class="footer-actions">
              <button @click="reset" class="btn-secondary">Làm lại</button>
-             <button @click="checkAnswers" class="btn-primary">Nộp bài</button>
+             <button v-if="!isSubmitting" @click="checkAnswers" class="btn-primary">Nộp bài</button>
+             <button v-else class="btn-primary disabled">Đã nộp bài</button>
           </div>
         </section>
       </main>
@@ -231,15 +232,19 @@ const currentDrag = ref(null);
 
 provide('currentDrag', currentDrag);
 
+const isSubmitting = ref(false);
+
 const reset = () => {
   for (const key in filledBlanks.value) {
     filledBlanks.value[key] = null;
   }
   // restore options to initial state
   availableOptions.value = initialOptions.slice();
+  isSubmitting.value = false;
 };
 
 const checkAnswers = async () => {
+  isSubmitting.value = true;
   let score = 0;
   const total = 10; // Updated total after moving CF out of drop-zones
   Object.keys(filledBlanks.value).forEach(blankId => {
@@ -272,13 +277,6 @@ const checkAnswers = async () => {
     await submissionService.create(submission)
   } catch (e) {
     console.warn('Failed to create submission via API, falling back to localStorage', e)
-    try {
-      const subs = JSON.parse(localStorage.getItem('submissions') || '[]')
-      subs.push(submission)
-      localStorage.setItem('submissions', JSON.stringify(subs))
-    } catch (err) {
-      console.warn('Failed to save submission to localStorage as fallback', err)
-    }
   }
 };
 
