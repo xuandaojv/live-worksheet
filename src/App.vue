@@ -77,6 +77,14 @@
             <div class="line final-line">
               Vậy: <drop-zone data-blank-id="5" @dropped="handleDrop('5', $event)" :content="getBlankContent('5')" /> <span class="step-num">(5)</span>
             </div>
+            <div style="display: flex; justify-content: center;">
+              <dotlottie-wc
+                src="https://lottie.host/b3761724-ef25-4551-9beb-e075904117e7/PgCm8BF9QB.lottie"
+                style="width: 300px;height: 300px"
+                autoplay
+                loop
+              ></dotlottie-wc>
+            </div>
           </div>
 
           <div class="footer-actions">
