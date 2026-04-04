@@ -19,26 +19,23 @@
         <section class="sidebar">
           <div class="geometry-card">
             <div class="triangle-svg-container">
-                <img src="@/assets/image/4.jpg" alt="Triangle Diagram" class="geometry-img" />
+                <img src="@/assets/image/14.png" alt="Triangle Diagram" class="geometry-img" />
             </div>
-            
-            <!-- <div class="problem-box">
+            <div class="problem-box" style="margin-top:12px;">
               <div class="row">
-                <strong>GT:</strong>
-                <div>
-                  <MathText text="\text{Cho hình ảnh biết: }" />
-                  <br>
-                  <MathText :text="'\\angle CFG = \\angle CDE = 90^\\circ'" />
+                <!-- <strong>Đề bài:</strong> -->
+                <div style="font-size:16px;">
+                  Chọn từ cho sẵn dưới đây đặt vào chỗ chấm (...) để được câu trả lời đúng.
+                  <ul style="margin:8px 0 0 18px;padding:0;">
+                    <li>O thuộc đường trung trực của AC</li>
+                    <li>OA = OB</li>
+                    <li>OB = OC</li>
+                    <li>OA = OC</li>
+                    <li>O thuộc đường trung trực của AB, tính chất bắc cầu</li>
+                  </ul>
                 </div>
               </div>
-              <div class="divider"></div>
-              <div class="row">
-                <strong>KL:</strong>
-                <div>
-                  <MathText text="\text{Tìm khoảng cách từ điểm D trên} \\ \text{bờ hồ tới điểm C trên Tháp Rùa (m)}" />
-                </div>
-              </div>
-            </div> -->
+            </div>
           </div>
 
           <div class="options-container">
@@ -62,49 +59,23 @@
           
           <div class="proof-content">
             <div class="line">
-              Xét hai tam giác: 
-              <drop-zone data-blank-id="1a" @dropped="handleDrop('1a', $event)" :content="getBlankContent('1a')" />
-              <!-- và
-              <drop-zone data-blank-id="1b" @dropped="handleDrop('1b', $event)" :content="getBlankContent('1b')" /> -->
-              Có: 
-              <span class="step-num">(1)</span>
+              Vì O thuộc đường trung trực của BC nên <drop-zone data-blank-id="1" @dropped="handleDrop('1', $event)" :content="getBlankContent('1')" /> <span class="step-num">(1)</span>
             </div>
 
             <div class="line">
-              <drop-zone data-blank-id="2" @dropped="handleDrop('2', $event)" :content="getBlankContent('2')" />
-              <span class="step-num">(2)</span>
+              Vì <drop-zone data-blank-id="2" @dropped="handleDrop('2', $event)" :content="getBlankContent('2')" /> nên <drop-zone data-blank-id="3" @dropped="handleDrop('3', $event)" :content="getBlankContent('3')" /> <span class="step-num">(2)-(3)</span>
             </div>
 
             <div class="line">
-              và <drop-zone data-blank-id="3" @dropped="handleDrop('3', $event)" :content="getBlankContent('3')" /> <span class="step-num">(3)</span>
+              Ta có: <strong>OB = OC, OC = OA</strong> (chứng minh trên) 
             </div>
 
             <div class="line">
-              Suy ra: <drop-zone data-blank-id="4" @dropped="handleDrop('4', $event)" :content="getBlankContent('4')" /> <span class="step-num">(4)</span>
-            </div>
-
-            <div class="line">
-              Do đó: <drop-zone data-blank-id="5" @dropped="handleDrop('5', $event)" :content="getBlankContent('5')" />(cặp cạnh tương ứng tỉ lệ) <span class="step-num">(5)</span>
-            </div>
-
-            <div class="line">
-              <drop-zone data-blank-id="6" @dropped="handleDrop('6', $event)" :content="getBlankContent('6')" /> <span class="step-num">(6)</span>
-            </div>
-
-            <div class="line">
-              <drop-zone data-blank-id="10" @dropped="handleDrop('10', $event)" :content="getBlankContent('10')" /> <span class="step-num">(7)</span>
-            </div>
-
-            <div class="line">
-              <drop-zone data-blank-id="7" @dropped="handleDrop('7', $event)" :content="getBlankContent('7')" /> <span class="step-num">(8)</span>
-            </div>
-
-            <div class="line">
-              <drop-zone data-blank-id="8" @dropped="handleDrop('8', $event)" :content="getBlankContent('8')" /> <span class="step-num">(9)</span>
+              nên: <drop-zone data-blank-id="4" @dropped="handleDrop('4', $event)" :content="getBlankContent('4')" /><span>(tính chất bắc cầu)</span> <span class="step-num">(4)</span>
             </div>
 
             <div class="line final-line">
-              Vậy khoảng cách từ điểm F (gốc cây) trên bờ hồ tới điểm C trên Tháp Rùa: <drop-zone data-blank-id="9" @dropped="handleDrop('9', $event)" :content="getBlankContent('9')" /> <span class="step-num">(10)</span>
+              Vậy: <drop-zone data-blank-id="5" @dropped="handleDrop('5', $event)" :content="getBlankContent('5')" /> <span class="step-num">(5)</span>
             </div>
           </div>
 
@@ -210,20 +181,13 @@ const handleTouchEnd = (event) => {
   touchPosition.value.show = false;
 };
 
+// New set: only 5 draggable options for this exercise
 const initialOptions = [
-  { id: 'a3', label: "\\angle CFG = \\angle CDE = 90^\\circ", correctPos: ['2', '3'] },
-  { id: 'a6', label: "\\dfrac{CF}{CD}=\\dfrac{FG}{DE}", correctPos: ['5'] },
-  { id: 'a1', label: "\\triangle CFG \\ và \\ \\triangle CDE", correctPos: ['1a', '1b'] },
-  { id: 'a5', label: "\\triangle CFG \\backsim \\triangle CDE \\;(g- g_)", correctPos: ['4'] },
-  // { id: 'a2', label: "\\triangle CDE", correctPos: ['1b', '1a'] },
-  { id: 'a11', label: "\\triangle CDE  \\backsim \\triangle CGF \\;(g- g_)", correctPos: ['11'] },
-  { id: 'a4', label: "\\angle DCE \\text{ là góc chung}", correctPos: ['3', '2'] },
-  { id: 'a8', label: "11CF - 10CF = 80", correctPos: ['7'] },
-  { id: 'a13', label: "11CF = 10(CF + 8)", correctPos: ['10'] },
-  { id: 'a10', label: "80(m)", correctPos: ['9'] },
-  { id: 'a9', label: "CF = 80", correctPos: ['8'] },
-  { id: 'a12', label: "CF = 100", correctPos: ['12'] },
-  { id: 'a7', label: "\\dfrac{CF}{CF+8}=\\dfrac{10}{11}", correctPos: ['6'] },
+  { id: 'o1', label: '\\text{O thuộc đường trung trực của AC}', correctPos: ['2'] },
+  { id: 'o2', label: 'OA = OB', correctPos: ['4'] },
+  { id: 'o3', label: 'OB = OC', correctPos: ['1'] },
+  { id: 'o4', label: 'OA = OC', correctPos: ['3'] },
+  { id: 'o5', label: '\\text{O thuộc đường trung trực của AB}', correctPos: ['5'] },
 ];
 
 const availableOptions = ref(initialOptions.slice());
@@ -246,12 +210,11 @@ const reset = () => {
 const checkAnswers = async () => {
   isSubmitting.value = true;
   let score = 0;
-  const total = 10; // Updated total after moving CF out of drop-zones
+  const total = 10; // 5 items * 2 points each
   Object.keys(filledBlanks.value).forEach(blankId => {
     const answer = filledBlanks.value[blankId];
-    // Check if the current blankId is in the allowed correct positions for this answer
     if (answer && answer.correctPos.includes(blankId.toString())) {
-      score++;
+      score += 2; // each correct gives 2 points
     }
   });
   isSubmit.value = true;
@@ -283,19 +246,14 @@ const checkAnswers = async () => {
 const isSubmit = ref(false);
 const isStarted = ref(false);
 
-const submitResult = ref("0/11");
-// Initialize with keys but empty values (11 blanks)
+const submitResult = ref("0/10");
+// Initialize with 5 blanks for this exercise
 const filledBlanks = ref({
-  '1a': null,
-  '1b': null,
+  '1': null,
   '2': null,
   '3': null,
   '4': null,
-  '5': null,
-  '7': null,
-  '8': null,
-  '9': null,
-  '10': null
+  '5': null
 });
 
 // The function you asked for
@@ -395,7 +353,7 @@ const startTouch = (option) => {
 /* 4. Layout Grid */
 .content-grid {
   display: grid;
-  grid-template-columns: 380px 1fr;
+  grid-template-columns: 455px 1fr;
   gap: 30px;
 }
 
@@ -421,7 +379,7 @@ const startTouch = (option) => {
   font-size: 0.95rem;
   color: #2d3748;
   position: relative;
-  ::before {
+  /* ::before {
     content: "";
     position: absolute;
     top: 15px;
@@ -429,7 +387,7 @@ const startTouch = (option) => {
     width: 1px;
     height: calc(100% - 30px);
     background-color: #cbd5e0;
-  }
+  } */
 }
 
 .divider {
