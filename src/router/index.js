@@ -1,12 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import App from '../App.vue'
+import AppV2 from '../AppV2.vue'
 import Results from '../views/Results.vue'
 import ResultsV2 from '../views/ResultsV2.vue'
 
 const routes = [
   { path: '/', name: 'Home', component: App },
-  { path: '/results-v2', name: 'Results', component: Results },
-  { path: '/results', name: 'ResultsV2', component: ResultsV2 }
+  { path: '/v2', name: 'Home', component: AppV2 },
+  { path: '/results-v2', name: 'ResultsV2', component: ResultsV2 },
+  { path: '/results', name: 'Results', component: Results }
 ]
 
 const router = createRouter({

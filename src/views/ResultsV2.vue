@@ -49,17 +49,17 @@
         </v-card>
       </v-col>
     </v-row>
-    <result-detail-popup 
+    <result-detail-popup-v2 
       v-if="isDetailPopupVisible" 
       :filledBlanks="detailedSubmission" 
-      @close="isDetailPopupVisible = false"></result-detail-popup>
+      @close="isDetailPopupVisible = false"></result-detail-popup-v2>
   </v-container>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import submissionService from '../services/submissionService'
-import ResultDetailPopup from './ResultDetailPopup.vue';
+import ResultDetailPopupV2 from './ResultDetailPopupV2.vue';
 
 // Giả định s.score là giá trị điểm (ví dụ 9)
 const getScoreStatus = (score) => {

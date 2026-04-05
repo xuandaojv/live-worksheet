@@ -5,9 +5,9 @@
         <section class="sidebar">
           <div class="geometry-card">
             <div class="triangle-svg-container">
-                <img src="@/assets/image/4.jpg" alt="Triangle Diagram" class="geometry-img" />
+                <img src="@/assets/image/14.png" alt="Triangle Diagram" class="geometry-img" />
             </div>
-
+            
             <!-- <div class="problem-box">
               <div class="row">
                 <strong>GT:</strong>
@@ -28,60 +28,34 @@
           </div>
 
                 <!-- keep options area to show available options if desired -->
-                <div class="options-container" style="margin-top:18px;">
-                    <div v-for="option in availableOptions" :key="option.id" class="draggable-chip">
-              <MathText :text="option.label" />
-            </div>
-          </div>
+                    <div class="options-container" style="margin-top:18px;">
+                        <div v-for="option in availableOptions" :key="option.id" class="draggable-chip">
+                  <MathText :text="option.label" />
+                </div>
+              </div>
         </section>
         <section class="proof-paper">
                 <h3 class="proof-title">Bài làm</h3>
                 <div class="c-point" :class="getScoreStatus()" style="font-family: 'Permanent Marker', cursive;"><span style="font-size: 48px;">{{ getScore() !== undefined ? getScore() : '0' }}</span><span class="separator">/10</span></div>
           <div class="proof-content">
             <div class="line">
-              Xét hai tam giác: 
-              <drop-zone :status="getDropStatus('1a')" data-blank-id="1a" @dropped="handleDrop('1a', $event)" :content="getBlankContent('1a')" />
-              <!-- và
-              <drop-zone data-blank-id="1b" @dropped="handleDrop('1b', $event)" :content="getBlankContent('1b')" /> -->
-              Có: 
-              <span class="step-num">(1)</span>
+              Vì O thuộc đường trung trực của BC nên <drop-zone :status="getDropStatus('1')" data-blank-id="1" @dropped="handleDrop('1', $event)" :content="getBlankContent('1')" /> <span class="step-num">(1)</span>
             </div>
 
             <div class="line">
-              <drop-zone :status="getDropStatus('2')" data-blank-id="2" @dropped="handleDrop('2', $event)" :content="getBlankContent('2')" />
-              <span class="step-num">(2)</span>
+              Vì <drop-zone :status="getDropStatus('2')" data-blank-id="2" @dropped="handleDrop('2', $event)" :content="getBlankContent('2')" /> nên <drop-zone :status="getDropStatus('3')" data-blank-id="3" @dropped="handleDrop('3', $event)" :content="getBlankContent('3')" /> <span class="step-num">(2)-(3)</span>
             </div>
 
             <div class="line">
-              và <drop-zone :status="getDropStatus('3')" data-blank-id="3" @dropped="handleDrop('3', $event)" :content="getBlankContent('3')" /> <span class="step-num">(3)</span>
+              Ta có: <strong>OB = OC, OC = OA</strong> (chứng minh trên) 
             </div>
 
             <div class="line">
-              Suy ra: <drop-zone :status="getDropStatus('4')" data-blank-id="4" @dropped="handleDrop('4', $event)" :content="getBlankContent('4')" /> <span class="step-num">(4)</span>
-            </div>
-
-            <div class="line">
-              Do đó: <drop-zone :status="getDropStatus('5')" data-blank-id="5" @dropped="handleDrop('5', $event)" :content="getBlankContent('5')" />(cặp cạnh tương ứng tỉ lệ) <span class="step-num">(5)</span>
-            </div>
-
-            <div class="line">
-              <drop-zone :status="getDropStatus('6')" data-blank-id="6" @dropped="handleDrop('6', $event)" :content="getBlankContent('6')" /> <span class="step-num">(6)</span>
-            </div>
-
-            <div class="line">
-              <drop-zone :status="getDropStatus('10')" data-blank-id="10" @dropped="handleDrop('10', $event)" :content="getBlankContent('10')" /> <span class="step-num">(7)</span>
-            </div>
-
-            <div class="line">
-              <drop-zone :status="getDropStatus('7')" data-blank-id="7" @dropped="handleDrop('7', $event)" :content="getBlankContent('7')" /> <span class="step-num">(8)</span>
-            </div>
-
-            <div class="line">
-              <drop-zone :status="getDropStatus('8')" data-blank-id="8" @dropped="handleDrop('8', $event)" :content="getBlankContent('8')" /> <span class="step-num">(9)</span>
+              nên: <drop-zone :status="getDropStatus('4')" data-blank-id="4" @dropped="handleDrop('4', $event)" :content="getBlankContent('4')" /> <span class="step-num">(4)</span>
             </div>
 
             <div class="line final-line">
-              Vậy khoảng cách từ điểm F (gốc cây) trên bờ hồ tới điểm C trên Tháp Rùa: <drop-zone :status="getDropStatus('9')" data-blank-id="9" @dropped="handleDrop('9', $event)" :content="getBlankContent('9')" /> <span class="step-num">(10)</span>
+              Vậy: <drop-zone :status="getDropStatus('5')" data-blank-id="5" @dropped="handleDrop('5', $event)" :content="getBlankContent('5')" /> <span class="step-num">(5)</span>
             </div>
           </div>
 
@@ -126,17 +100,17 @@ const getScoreStatus = () => {
 }
 
 const getScore = () => {
-    if (props.filledBlanks) {
-        var details = JSON.parse(props.filledBlanks);
-        var score = 0;
-        Object.keys(details).forEach(blankId => {
-            const answer = details[blankId];
-            if (answer && answer.correctPos.includes(blankId.toString())) {
-                score++;
-            }
-        });
-        return score;
-    }
+  if (props.filledBlanks) {
+    var details = JSON.parse(props.filledBlanks);
+    var score = 0;
+    Object.keys(details).forEach(blankId => {
+      const answer = details[blankId];
+      if (answer && answer.correctPos.includes(blankId.toString())) {
+        score += 2; // 2 points per correct
+      }
+    });
+    return score;
+  }
 }
 
 // The function you asked for
