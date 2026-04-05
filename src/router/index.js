@@ -6,7 +6,7 @@ import ResultsV2 from '../views/ResultsV2.vue'
 
 const routes = [
   { path: '/', name: 'Home', component: App },
-  { path: '/v2', name: 'Home', component: AppV2 },
+  { path: '/v2', name: 'HomeV2', component: AppV2 },
   { path: '/results-v2', name: 'ResultsV2', component: ResultsV2 },
   { path: '/results', name: 'Results', component: Results }
 ]
